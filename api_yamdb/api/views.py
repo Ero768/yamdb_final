@@ -1,36 +1,31 @@
 import uuid
+
 from django.conf import settings
-from django.db.models import Avg
 from django.core.mail import send_mail
-from rest_framework import viewsets, status
-from rest_framework.generics import get_object_or_404
+from django.db.models import Avg
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.filters import SearchFilter
-
+from rest_framework.generics import get_object_or_404
+from rest_framework.mixins import (CreateModelMixin, DestroyModelMixin,
+                                   ListModelMixin)
+from rest_framework.pagination import PageNumberPagination
+from rest_framework.permissions import (AllowAny, IsAuthenticated,
+                                        IsAuthenticatedOrReadOnly)
+from rest_framework.response import Response
+from rest_framework.views import APIView
 from rest_framework.viewsets import GenericViewSet
 from rest_framework_simplejwt.tokens import AccessToken
-from rest_framework.views import APIView
-from rest_framework.pagination import PageNumberPagination
-from rest_framework.response import Response
-from rest_framework.permissions import (
-    IsAuthenticatedOrReadOnly, IsAuthenticated, AllowAny
-)
-from rest_framework.mixins import (
-    CreateModelMixin, DestroyModelMixin,
-    ListModelMixin
-)
-from django_filters.rest_framework import DjangoFilterBackend
 
-from .filters import GenresFilter, CategoriesFilter, TitlesFilter
-from .models import Category, Genre, Title, User, Review, Comment
-from .serializers import (
-    CategorySerializer, GenreSerializer, TitleReadSerializer,
-    TitleCreateSerializer, UserSerializer, CommentSerializer,
-    ReviewSerializer
-)
-from .permissions import (
-    IsAdminOrReadOnly, IsModerator, IsSuperuser, IsAuthorOrReadOnly, IsAdmin
-)
+from .filters import CategoriesFilter, GenresFilter, TitlesFilter
+from .models import Category, Comment, Genre, Review, Title, User
+from .permissions import (IsAdmin, IsAdminOrReadOnly, IsAuthorOrReadOnly,
+                          IsModerator, IsSuperuser)
+from .serializers import (CategorySerializer, CommentSerializer,
+                          GenreSerializer, ReviewSerializer,
+                          TitleCreateSerializer, TitleReadSerializer,
+                          UserSerializer)
 
 
 class CustomViewSet(
