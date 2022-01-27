@@ -36,3 +36,7 @@ http://51.250.24.96/api/v1/
     docker-compose exec web python manage.py loaddata fixtures.json
     ```
 После запуска документацию можно посмотреть по адресу http://localhost/redoc/
+
+## Автор
+
+**Иван Ерофеев** - [Ero768](https://github.com/Ero768)
